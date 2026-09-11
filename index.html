@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1f3a" />
+  <title>AA Fare Code Decoder</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div class="brandmark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <p class="eyebrow">American Airlines</p>
+      <h1>Fare Code Decoder</h1>
+      <p class="lede">Paste an AA booking class or fare basis code and get a position-aware, confidence-rated explanation.</p>
+    </header>
+
+    <section class="card input-card" aria-labelledby="decoder-heading">
+      <h2 id="decoder-heading" class="sr-only">Decode a fare code</h2>
+      <label for="fareCode">Fare basis / booking code</label>
+      <div class="input-row">
+        <input id="fareCode" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="20" placeholder="e.g. Y, B, KX14NR" aria-describedby="input-help" />
+        <button id="decodeBtn" type="button">Decode</button>
+      </div>
+      <p id="input-help" class="help">This is not your 6-character record locator. Look for “Fare Basis,” “Fare Code,” or the single-letter booking class.</p>
+      <div class="examples" aria-label="Example fare codes">
+        <button class="chip" data-code="B">B</button>
+        <button class="chip" data-code="Y">Y</button>
+        <button class="chip" data-code="W">W</button>
+        <button class="chip" data-code="J">J</button>
+        <button class="chip" data-code="KX14NR">KX14NR</button>
+        <button class="chip" data-code="B0AVZRUA">B0AVZRUA</button>
+      </div>
+    </section>
+
+    <section id="result" class="result hidden" aria-live="polite"></section>
+
+    <section class="card guide">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Quick reference</p>
+          <h2>AA booking classes</h2>
+        </div>
+      </div>
+      <div id="classGrid" class="class-grid"></div>
+      <p class="fineprint">AA’s published earning chart groups F/J as full-fare First/Business; A/C/D/I/R as discounted First/Business; W/P as Premium Economy; Y/H/K/M/L/V/G/S/N/Q/O as Economy; and B as Basic Economy. Actual fare rules still control.</p>
+    </section>
+
+    <section class="card explainer">
+      <p class="eyebrow">How to read it</p>
+      <h2>Booking class vs. fare basis</h2>
+      <p><strong>Booking class</strong> is usually one letter and identifies the inventory bucket/cabin. A <strong>fare basis</strong> is a longer airline-defined code that starts with the booking class and can encode pricing or fare-rule information.</p>
+      <p>Suffixes are not globally standardized. This decoder separates <strong>AA-published positional rules</strong> from common industry conventions and historical AA patterns. Each result is tagged so you can see what is confirmed versus inferred.</p>
+    </section>
+
+    <section class="card explainer">
+      <p class="eyebrow">AA-specific decoding</p>
+      <h2>What we can reliably infer</h2>
+      <div class="rule-list">
+        <div><strong>Character 1</strong><span>Booking class / fare class. AA defines this as the first character of the ticketed fare basis.</span></div>
+        <div><strong>Character 7 = B</strong><span>AA-published Basic Economy identifier. AA also identifies Basic Economy with fare-type codes EOU or ERU.</span></div>
+        <div><strong>Character 8</strong><span>For AA's 2023 U.S. Domestic and Mexico/Caribbean/Latin America filing construct, this can encode sales-channel/viewership. Numeric = standard third-party; Z/Y/X/W/V/U/T/S/Q/R = third-party modern retailing Value; A/B/D/E/G/J/K/M/N/P = American-owned.</span></div>
+      </div>
+      <p class="fineprint">The position-8 construct was introduced for specific AA markets and filing architecture; it should not be assumed to describe every historical, international, private, negotiated, or partner fare.</p>
+    </section>
+
+    <section class="card sources">
+      <p class="eyebrow">Sources</p>
+      <h2>Reference material</h2>
+      <ul>
+        <li><a href="https://www.aa.com/i18nForward.do?p=%2Ftravel-info%2Fpartner-airlines%2Famerican-airlines.jsp" target="_blank" rel="noreferrer">American Airlines — AAdvantage earning by booking code</a></li>
+        <li><a href="https://saleslink.aa.com/en-US/resources/html/basic-economy.html" target="_blank" rel="noreferrer">American Airlines SalesLink — Basic Economy identification</a></li>
+        <li><a href="https://saleslink.aa.com/en-us/blog/2023/agency_news/american-launches-new-modern-retailing-content-implementation-guide-for-agency-partners-.html" target="_blank" rel="noreferrer">American Airlines SalesLink — Fare-basis position 8 / channel coding</a></li>
+        <li><a href="https://saleslink.aa.com/en-US/documents/Archives/AgencyRef/Product%20Overview.pdf" target="_blank" rel="noreferrer">American Airlines SalesLink — Fare product overview</a></li>
+        <li><a href="https://www.alternativeairlines.com/fare-basis-codes-explained" target="_blank" rel="noreferrer">Alternative Airlines — Fare basis codes explained</a></li>
+      </ul>
+      <p class="fineprint">Unofficial decoder. American can change fare filing conventions at any time. For refunds, changes, bags, upgrades, or mileage, the ticket’s current fare rules and AA’s published terms are authoritative.</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
